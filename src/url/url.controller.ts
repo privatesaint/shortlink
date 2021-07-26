@@ -23,4 +23,9 @@ export class UrlController {
   getUrl(@Param('url') url: string) {
     return this.urlService.redirectUrl(url);
   }
+
+  @Get('statistic/:url_path')
+  getUrlStatics(@Param('url_path') url_path: string) {
+    return this.urlService.getUrlStatics(url_path);
+  }
 }

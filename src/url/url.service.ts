@@ -26,6 +26,7 @@ export class UrlService {
     const shortUrl = shortid();
     const url = {
       views: 0,
+      decoded: 0,
       longUrl: encodeUrlDto.url,
       shortUrl: `${process.env.APP_URL}/${shortUrl}`,
     };
@@ -38,6 +39,7 @@ export class UrlService {
     const shortUrl = getUrlPath(encodeUrlDto.url);
 
     const url = this.findOne(shortUrl);
+    url.decoded += 1;
 
     return { longUrl: url.longUrl };
   }
@@ -47,5 +49,11 @@ export class UrlService {
     urlObj.views += 1;
 
     return { url: urlObj.longUrl };
+  }
+
+  getUrlStatics(url: string) {
+    const { views, decoded } = this.findOne(url);
+
+    return { views, decoded };
   }
 }

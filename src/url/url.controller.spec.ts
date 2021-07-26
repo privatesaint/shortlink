@@ -51,4 +51,16 @@ describe('UrlController', () => {
       expect(decodeUrl).toEqual(request);
     });
   });
+
+  describe('Get Url Statistics', () => {
+    it('should return url statistics', () => {
+      const request = { url: 'http://google.com' };
+      const encodeUrl = controller.encode(request);
+      const path = encodeUrl.shortUrl.split('/').slice(-1).join('');
+      const urlStatistic = controller.getUrlStatics(path);
+
+      expect(typeof urlStatistic).toBe('object');
+      expect(urlStatistic).toEqual({ views: 0, decoded: 0 });
+    });
+  });
 });
