@@ -27,4 +27,16 @@ describe('UrlController', () => {
       expect(encodeUrl.views).toEqual(0);
     });
   });
+
+  describe('decode', () => {
+    it('should return status code of 200 with decoded url', () => {
+      const request = { url: 'http://google.com' };
+      const encodeUrl = controller.encode(request);
+
+      const decodeUrl = controller.decode({ url: encodeUrl.shortUrl });
+
+      expect(typeof decodeUrl).toBe('object');
+      expect(decodeUrl.longUrl).toBe(request.url);
+    });
+  });
 });

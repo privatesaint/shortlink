@@ -2,6 +2,6 @@ import { IsUrl, IsNotEmpty } from 'class-validator';
 
 export class EncodeUrlDto {
   @IsNotEmpty()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   url: string;
 }
