@@ -41,7 +41,7 @@ $ npm run start:prod
 
 <!-- using the defined port on the .env.example -->
 
-- [Documentation](http://localhost:3333)
+- Access Documentation from http://localhost:3333
 
 ## Test
 
