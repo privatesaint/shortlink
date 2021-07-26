@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Redirect } from '@nestjs/common';
 import { UrlService } from './url.service';
 import { EncodeUrlDto } from './dto/encode-url.dto';
 import { Url } from './interface/url.interface';
@@ -16,5 +16,11 @@ export class UrlController {
   @Post('decode')
   decode(@Body() encodeDto: EncodeUrlDto): DecodedUrl {
     return this.urlService.decode(encodeDto);
+  }
+
+  @Get(':url')
+  @Redirect('', 301)
+  getUrl(@Param('url') url: string) {
+    return this.urlService.redirectUrl(url);
   }
 }

@@ -10,6 +10,18 @@ import { DecodedUrl } from './interface/decodeUrl.interface';
 export class UrlService {
   private readonly urls: Urls = {};
 
+  findOne(url: string): Url {
+    const urlObj = this.urls[url];
+
+    if (!urlObj) {
+      throw new HttpException(
+        { statusCode: 404, message: 'Address not found' },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return urlObj;
+  }
+
   encode(encodeUrlDto: EncodeUrlDto): Url {
     const shortUrl = shortid();
     const url = {
@@ -24,14 +36,16 @@ export class UrlService {
 
   decode(encodeUrlDto: EncodeUrlDto): DecodedUrl {
     const shortUrl = getUrlPath(encodeUrlDto.url);
-    const url = this.urls[shortUrl];
 
-    if (!url) {
-      throw new HttpException(
-        { statusCode: 404, message: 'Address not found' },
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    const url = this.findOne(shortUrl);
+
     return { longUrl: url.longUrl };
+  }
+
+  redirectUrl(url: string) {
+    const urlObj = this.findOne(url);
+    urlObj.views += 1;
+
+    return { url: urlObj.longUrl };
   }
 }

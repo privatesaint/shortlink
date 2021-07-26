@@ -39,4 +39,16 @@ describe('UrlController', () => {
       expect(decodeUrl.longUrl).toBe(request.url);
     });
   });
+
+  describe('Redirect to full url', () => {
+    it('should redirect to the encoded', () => {
+      const request = { url: 'http://google.com' };
+      const encodeUrl = controller.encode(request);
+      const path = encodeUrl.shortUrl.split('/').slice(-1).join('');
+      const decodeUrl = controller.getUrl(path);
+
+      expect(typeof decodeUrl).toBe('object');
+      expect(decodeUrl).toEqual(request);
+    });
+  });
 });
